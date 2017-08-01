@@ -10,19 +10,25 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 public class OrderPizza extends AppCompatActivity {
-    Button btn, btn1;
+    Button btn, btn1R;
     TextView namecustomer;
     NumberPicker np1, np2;
     TextView txt1, txt2, txt3;
     int pizza1, pizza2;
     String value;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_pizza);
-        namecustomer = (TextView) findViewById(R.id.txtname);
+
+        dialog = new Dialog(OrderPizza.this);
+        dialog.setContentView(R.layout.activity_bull_pizza);
+        dialog.setTitle("Bull Pizza");
+        btn1R = (Button) dialog.findViewById(R.id.btnReturnx);
         btn = (Button) findViewById(R.id.btnsave);
+        namecustomer = (TextView) findViewById(R.id.txtname);
         final Intent intent = getIntent();
         Intent mIntent = new Intent(this, WebPizza.class);
         mIntent.putExtra("profile", value);
@@ -46,7 +52,6 @@ public class OrderPizza extends AppCompatActivity {
                 pizza1 = indexnumber1;
             }
         });
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,20 +62,23 @@ public class OrderPizza extends AppCompatActivity {
 //                mBundle2.putString("pizza2", pizza2 + "");
 //                intent.putExtras(mBundle1);
 //                intent.putExtras(mBundle2);
-                final Dialog dialog = new Dialog(OrderPizza.this);
-                dialog.setTitle("Bull Pizza");
-                dialog.setContentView(R.layout.activity_bull_pizza);
+
                 txt1 = (TextView) dialog.findViewById(R.id.txtbull1);
                 txt2 = (TextView) dialog.findViewById(R.id.txtbull2);
-                txt3=(TextView) dialog.findViewById(R.id.textView9);
-                btn1 = (Button) dialog.findViewById(R.id.btnReturn);
-                txt1.setText("Pizza Thập Cẩm: "+pizza1 + "");
-                txt2.setText("Pizza Hải Sản: " +pizza2 + "");
+                txt3 = (TextView) dialog.findViewById(R.id.textView9);
+
+                txt1.setText("Pizza Thập Cẩm: " + pizza1 + "");
+                txt2.setText("Pizza Hải Sản: " + pizza2 + "");
                 txt3.setText("Customer: " + value + "");
                 dialog.show();
             }
 
         });
-
+        btn1R.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 }
